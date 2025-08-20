@@ -26,8 +26,12 @@ export async function signUpParent(email, password, userName) {
       return { error: dbError.message };
     }
   }
-
-  return { data: authData.user };
+  await supabase.auth.signOut();
+  return {
+    data: authData.user,
+    info: "Signup successful. Please log in with your new account.",
+  };
+  // return { data: authData.user };
 }
 
 export async function signInParent(email, password) {
@@ -39,7 +43,6 @@ export async function signInParent(email, password) {
   if (error) {
     return { error: error.message };
   }
-
   return { data: data.user };
 }
 

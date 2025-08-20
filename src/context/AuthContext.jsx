@@ -55,12 +55,11 @@ export function AuthProvider({ children }) {
     const { data, error } = await signUpParent(email, password, name);
     if (error) {
       dispatch({ type: "SET_MESSAGE", message: error });
+      return { ok: false, error };
     } else {
-      dispatch({
-        type: "SET_MESSAGE",
-        message: "Signup successful! Check your email.",
-      });
+      dispatch({ type: "SET_MESSAGE", message: "" });
       dispatch({ type: "RESET_FIELDS" });
+      return { ok: true, info: "Signup successful! You can log in now." };
     }
   }
 

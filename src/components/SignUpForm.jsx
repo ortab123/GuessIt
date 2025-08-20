@@ -3,9 +3,13 @@ import { useAuth } from "../context/AuthContext";
 export default function SignupForm({ goBack }) {
   const { state, dispatch, handleSignup } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleSignup();
+    const res = await handleSignup();
+    if (res?.ok) {
+      alert(res.info);
+      if (goBack) goBack();
+    }
   };
 
   return (
