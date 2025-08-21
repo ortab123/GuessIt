@@ -1,4 +1,3 @@
-// src/components/AddChild.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addChild } from "../services/child"; 
@@ -49,8 +48,6 @@ export default function AddChild() {
 
         <button type="submit">Add</button>
       </form>
-
-      {message && <p>{message}</p>}
     </div>
   );
 }
