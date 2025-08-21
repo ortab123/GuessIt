@@ -1,37 +1,52 @@
 import { useAuth } from "../context/AuthContext"
 import { useNavigate, Link } from "react-router-dom"
+import { useState } from "react"
 
 export default function SignupForm({ goBack }) {
-  const { state, dispatch, handleSignup } = useAuth()
+  const { handleSignup } = useAuth()
   const navigate = useNavigate()
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [message, setMessage] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const res = await handleSignup()
-    if (res?.ok) {
+    const res = await handleSignup(email, password, name)
+    if (res?.error) {
+      setMessage(res.error)
+    } else {
+      setMessage("")
       alert(res.info)
-      if (!state.message.includes("error")) {
-        navigate("/who")
-      }
+      navigate("/who")
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md max-w-md mx-auto mt-10">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md max-w-md mx-auto mt-10"
+    >
       <h2 className="text-xl font-bold mb-2 text-center">Parent Signup</h2>
-      <input type="text" placeholder="Full name" value={state.name} onChange={(e) => dispatch({ type: "SET_FIELD", field: "name", value: e.target.value })} className="border p-2 rounded" />
-      <input type="email" placeholder="Email" value={state.email} onChange={(e) => dispatch({ type: "SET_FIELD", field: "email", value: e.target.value })} className="border p-2 rounded" />
+      <input
+        type="text"
+        placeholder="Full name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="border p-2 rounded"
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="border p-2 rounded"
+      />
       <input
         type="password"
         placeholder="Password"
-        value={state.password}
-        onChange={(e) =>
-          dispatch({
-            type: "SET_FIELD",
-            field: "password",
-            value: e.target.value,
-          })
-        }
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         className="border p-2 rounded"
       />
       <button type="submit" className="bg-green-600 text-white py-2 rounded hover:bg-green-700">
@@ -45,7 +60,7 @@ export default function SignupForm({ goBack }) {
           Back
         </button>
       )}
-      {state.message && <p className="text-red-500 text-center">{state.message}</p>}
+      {message && <p className="text-red-500 text-center">{message}</p>}
     </form>
   )
 }

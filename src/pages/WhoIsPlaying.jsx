@@ -66,42 +66,33 @@ import { supabase } from "../services/supabaseClient"
 
 export default function WhoIsPlaying() {
   const navigate = useNavigate()
-  const { state } = useAuth()
+  const { session, user, loading } = useAuth()
   const [children, setChildren] = useState([])
   const [err, setErr] = useState("")
 
   useEffect(() => {
-    if (!state.session) {
+    if (loading) return
+    if (!session) {
       navigate("/login")
       return
     }
     setErr("")
     // Fetch the list of children
     const fetchChildren = async () => {
-      const {
-        data: { user },
-        error: userErr,
-      } = await supabase.auth.getUser()
-      if (userErr) {
-        setErr(userErr.message)
-        return
-      }
-      if (!user) {
-        setErr("Not logged in")
-        return
-      }
-
+      if (!user) return
       const { data, error } = await supabase
         .from("Children")
         .select("id,name,age")
         .eq("parent_id", user.id)
         .order("created_at", { ascending: true })
-
       if (error) setErr(error.message)
       else setChildren(data || [])
     }
     fetchChildren()
-  }, [state.session, navigate])
+  }, [session, user, loading, navigate])
+
+  if (loading)
+    return <div className="flex justify-center items-center h-screen text-xl">Loading...</div>
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50">

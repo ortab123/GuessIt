@@ -9,9 +9,17 @@ import ParentDashboard from "./pages/ParentDashboard"
 import Header from "./components/Header"
 import "./App.css"
 
+function ProtectedRoute({ children }) {
+  const { session, loading } = useAuth()
+  if (loading)
+    return <div className="flex justify-center items-center h-screen text-xl">Loading...</div>
+  if (!session) return <Navigate to="/login" replace />
+  return children
+}
+
 function App() {
-  const { state, handleLogout } = useAuth()
-  const isAuthed = !!state.session
+  const { session, handleLogout } = useAuth()
+  const isAuthed = !!session
   const navigate = useNavigate()
 
   const handleBack = () => {
@@ -25,10 +33,38 @@ function App() {
         <Route path="/" element={<Navigate to="/who" replace />} />
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/who" element={<WhoIsPlaying />} />
-        <Route path="/parent" element={isAuthed ? <ParentDashboard /> : <Navigate to="/login" replace />} />
-        <Route path="/add" element={isAuthed ? <AddChild /> : <Navigate to="/login" replace />} />
-        <Route path="/child/:id" element={isAuthed ? <ChildScreen /> : <Navigate to="/login" replace />} />
+        <Route
+          path="/who"
+          element={
+            <ProtectedRoute>
+              <WhoIsPlaying />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/parent"
+          element={
+            <ProtectedRoute>
+              <ParentDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/add"
+          element={
+            <ProtectedRoute>
+              <AddChild />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/child/:id"
+          element={
+            <ProtectedRoute>
+              <ChildScreen />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/who" replace />} />
       </Routes>
     </>

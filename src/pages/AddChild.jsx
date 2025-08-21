@@ -1,25 +1,42 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { addChild } from "../services/children"; 
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { addChild, fetchChildrenForParent } from "../services/children"
+import { useAuth } from "../context/AuthContext"
 
 export default function AddChild() {
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [message, setMessage] = useState("");
-  const navigate = useNavigate();
+  const [name, setName] = useState("")
+  const [age, setAge] = useState("")
+  const [message, setMessage] = useState("")
+  const [children, setChildren] = useState([])
+  const navigate = useNavigate()
+  const { user } = useAuth()
+
+  useEffect(() => {
+    async function getChildren() {
+      if (user) {
+        const { data, error } = await fetchChildrenForParent(user.id)
+        if (!error) setChildren(data)
+      }
+    }
+    getChildren()
+  }, [user])
 
   async function handleSubmit(e) {
-    e.preventDefault();
-
-    const { data, error } = await addChild(name, age);
-
+    e.preventDefault()
+    const { data, error } = await addChild(name, age)
     if (error) {
-      setMessage(`❌ ${error}`);
+      setMessage(`❌ ${error}`)
     } else {
-        alert(`Child "${name}" added successfully!`); 
-        navigate("/who");
-        setName("");
-        setAge("");
+      setMessage("")
+      alert(`Child "${name}" added successfully!`)
+      setName("")
+      setAge("")
+      // Refetch children after adding
+      if (user) {
+        const { data: updatedChildren } = await fetchChildrenForParent(user.id)
+        setChildren(updatedChildren)
+      }
+      navigate("/who")
     }
   }
 
@@ -29,25 +46,29 @@ export default function AddChild() {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name: </label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+          <input value={name} onChange={(e) => setName(e.target.value)} required />
         </div>
 
         <div>
           <label>Age: </label>
-          <input
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            required
-          />
+          <input type="number" value={age} onChange={(e) => setAge(e.target.value)} required />
         </div>
 
         <button type="submit">Add</button>
       </form>
+      {message && <div style={{ color: "red", marginTop: "10px" }}>{message}</div>}
+      {children.length > 0 && (
+        <div style={{ marginTop: "20px" }}>
+          <h3>Your Children:</h3>
+          <ul>
+            {children.map((child) => (
+              <li key={child.id}>
+                {child.name} (Age: {child.age})
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
-  );
+  )
 }

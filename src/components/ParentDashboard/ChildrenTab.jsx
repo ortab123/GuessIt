@@ -1,18 +1,15 @@
-import ChildCard from "./ChildCard";
-import { useChildren } from "../../context/ChildrenContext";
+import ChildCard from "./ChildCard"
 
-export default function ChildrenTab() {
-  const { childList, addChild, deleteChild } = useChildren();
-
+export default function ChildrenTab({ childList, addChild, deleteChild }) {
   const handleAdd = async () => {
-    const name = prompt("Enter child name:");
-    const age = prompt("Enter child age:");
-    if (name) await addChild({ name, age });
-  };
+    const name = prompt("Enter child name:")
+    const age = prompt("Enter child age:")
+    if (name) await addChild({ name, age })
+  }
 
   const handleDelete = async (child) => {
-    await deleteChild(child.id);
-  };
+    await deleteChild(child.id)
+  }
 
   return (
     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-white/30">
@@ -28,20 +25,21 @@ export default function ChildrenTab() {
         </button>
       </div>
 
-      {childList.length === 0 ? (
+      {childList && childList.length === 0 ? (
         <p className="text-gray-500">No children added yet.</p>
       ) : (
         <div className="space-y-3">
-          {childList.map((child) => (
-            <ChildCard
-              key={child.id}
-              child={child}
-              onEdit={() => console.log("Edit child", child)}
-              onDelete={() => handleDelete(child)}
-            />
-          ))}
+          {childList &&
+            childList.map((child) => (
+              <ChildCard
+                key={child.id}
+                child={child}
+                onEdit={() => console.log("Edit child", child)}
+                onDelete={() => handleDelete(child)}
+              />
+            ))}
         </div>
       )}
     </div>
-  );
+  )
 }

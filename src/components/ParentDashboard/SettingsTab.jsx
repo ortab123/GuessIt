@@ -1,39 +1,35 @@
-import { useState } from "react";
-import { supabase } from "../../services/supabaseClient";
-import { useAuth } from "../../context/AuthContext";
+import { useState } from "react"
+import { supabase } from "../../services/supabaseClient"
+import { useAuth } from "../../context/AuthContext"
 
 export default function SettingsTab() {
-  const { state } = useAuth();
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState(state.session?.user?.email || "");
-  const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
+  const { user } = useAuth()
+  const [userName, setUserName] = useState("")
+  const [email, setEmail] = useState(user?.email || "")
+  const [password, setPassword] = useState("")
+  const [msg, setMsg] = useState("")
 
   const handleUpdate = async () => {
-    setMsg("");
+    setMsg("")
 
-    const updates = {};
-    if (email) updates.email = email;
-    if (password) updates.password = password;
+    const updates = {}
+    if (email) updates.email = email
+    if (password) updates.password = password
 
     if (Object.keys(updates).length > 0) {
-      console.log(password);
-      const { error: authError } = await supabase.auth.updateUser(updates);
-      if (authError) return setMsg(authError.message);
+      const { error: authError } = await supabase.auth.updateUser(updates)
+      if (authError) return setMsg(authError.message)
     }
 
     if (userName) {
-      const userId = state.session?.user?.id;
-      const { error: dbError } = await supabase
-        .from("Users")
-        .update({ userName })
-        .eq("id", userId);
+      const userId = user?.id
+      const { error: dbError } = await supabase.from("Users").update({ userName }).eq("id", userId)
 
-      if (dbError) return setMsg(dbError.message);
+      if (dbError) return setMsg(dbError.message)
     }
 
-    setMsg("Account updated successfully!");
-  };
+    setMsg("Account updated successfully!")
+  }
 
   return (
     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-white/30">
@@ -74,5 +70,5 @@ export default function SettingsTab() {
         {msg && <p className="text-sm text-gray-600 mt-2">{msg}</p>}
       </div>
     </div>
-  );
+  )
 }
