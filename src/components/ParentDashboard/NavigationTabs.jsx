@@ -1,6 +1,5 @@
 export default function NavigationTabs({ activeTab, setActiveTab }) {
   const tabs = [
-    // { id: "overview", name: "Overview", icon: "📊" },
     { id: "children", name: "Children", icon: "👶" },
     { id: "analytics", name: "Analytics", icon: "📈" },
     { id: "add_quiz", name: "Add Quiz", icon: "➕" },
