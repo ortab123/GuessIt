@@ -17,3 +17,14 @@ export async function addChild(name, age) {
   if (error) return { error: error.message };
   return { data };
 }
+
+export async function getChildById(id) {
+  const { data, error } = await supabase
+    .from("Children")
+    .select("id,name,age,parent_id")
+    .eq("id", id)
+    .single(); 
+
+  if (error) return { error: error.message };
+  return { data };
+}
