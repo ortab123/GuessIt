@@ -1,28 +1,23 @@
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-export default function SignupForm({ goBack }) {
-  const { state, dispatch, handleSignup } = useAuth();
+export default function LoginForm({ goBack }) {
+  const { state, dispatch, handleLogin } = useAuth();
+  const navigate = useNavigate();
+  
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const res = await handleSignup();
-    if (res?.ok) {
-      alert(res.info);
-      if (goBack) goBack();
+    handleLogin();
+
+    if (!state.message.includes("error")) {
+      navigate("/who");
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Parent Signup</h2>
-      <input
-        type="text"
-        placeholder="Full name"
-        value={state.name}
-        onChange={(e) =>
-          dispatch({ type: "SET_FIELD", field: "name", value: e.target.value })
-        }
-      />
+      <h2>Parent Login</h2>
       <input
         type="email"
         placeholder="Email"
@@ -43,12 +38,13 @@ export default function SignupForm({ goBack }) {
           })
         }
       />
-      <button type="submit">Sign Up</button>
+      <button type="submit">Login</button>
       {goBack && (
         <button type="button" onClick={goBack}>
           Back
         </button>
       )}
+
       {state.message && <p>{state.message}</p>}
     </form>
   );

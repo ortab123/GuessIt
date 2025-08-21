@@ -1,14 +1,18 @@
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupForm({ goBack }) {
   const { state, dispatch, handleSignup } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await handleSignup();
     if (res?.ok) {
       alert(res.info);
-      if (goBack) goBack();
+      if (!state.message.includes("error")) {
+      navigate("/Home");
+    }
     }
   };
 
