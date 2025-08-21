@@ -6,7 +6,7 @@ import OverviewTab from "./OverviewTab"
 import ChildrenTab from "./ChildrenTab"
 import AnalyticsTab from "./AnalysticsTab"
 import SettingsTab from "./SettingsTab"
-import CustomQuiz from "./CustomeQuiz"
+import CustomQuiz from "./CustomQuiz"
 
 export default function ParentDashboard({ onBack }) {
   const { state, handleLogout } = useAuth()

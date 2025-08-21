@@ -1,22 +1,18 @@
 import { useState } from "react"
 
-export default function ImageDropzone() {
-  const [images, setImages] = useState([])
-  const [totalImages, setTotalImages] = useState(0)
+export default function ImageDropzone({ images, setImages, selectedIndex, setSelectedIndex }) {
   const [error, setError] = useState("")
-  const [selectedIndex, setSelectedIndex] = useState(null)
 
   const handleFiles = (files) => {
     const newFiles = Array.from(files)
 
-    if (newFiles.length + totalImages > 4) {
+    if (newFiles.length + images.length > 4) {
       setError("You can add just 4 pictures")
       return
     }
 
     setError("")
     setImages((prev) => [...prev, ...newFiles])
-    setTotalImages((prev) => prev + newFiles.length)
   }
 
   const handleDrop = (e) => {
@@ -34,7 +30,6 @@ export default function ImageDropzone() {
 
   const removeImage = (index) => {
     setImages((prev) => prev.filter((_, i) => i !== index))
-    setTotalImages((prev) => prev - 1)
 
     if (selectedIndex === index) {
       setSelectedIndex(null)
@@ -42,8 +37,9 @@ export default function ImageDropzone() {
   }
 
   return (
-    <div onDrop={handleDrop} onDragOver={handleDragOver} className="border border-dashed border-gray-400 rounded-md p-4 mt-4 text-center cursor-pointer" onClick={() => document.getElementById("fileInput").click()}>
-      {!error && totalImages < 4 && <p className="text-gray-600 mb-2">{totalImages === 0 ? "Drag and drop images here" : `Drag and drop ${4 - totalImages} images more`}</p>}
+    <div onDrop={handleDrop} onDragOver={handleDragOver} className="border border-dashed border-gray-400 rounded-md p-4 text-center cursor-pointer" onClick={() => document.getElementById("fileInput").click()}>
+      {!error && images.length < 4 && <p className="text-gray-600 mb-2">{images.length === 0 ? "Drag and drop images here" : `Drag and drop ${4 - images.length} images more`}</p>}
+
       <input id="fileInput" type="file" accept="image/*" multiple onChange={handleChange} className="hidden" />
 
       {error && <p className="text-red-500 mt-2">{error}</p>}
@@ -53,7 +49,7 @@ export default function ImageDropzone() {
           {images.map((file, idx) => (
             <div
               key={idx}
-              className={`relative h-24 w-30 cursor-pointer rounded overflow-hidden border-2 ${selectedIndex === idx ? "border-green-500 shadow-lg shadow-green-400" : "border-transparent"}`}
+              className={`relative h-24 w-30 cursor-pointer rounded overflow-hidden border-2 ${selectedIndex === idx ? "border-green-500 shadow-[0_0_10px_3px_rgba(34,197,94,0.7)]" : "border-transparent"}`}
               onClick={(e) => {
                 e.stopPropagation()
                 setSelectedIndex(idx)
