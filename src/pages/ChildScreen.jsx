@@ -47,8 +47,8 @@ export default function ChildScreen() {
           ))}
         </div>
         <div className="mt-6">
-          {category === "Dogs" && <APIQuiz child={child} />}
-          {category === "General Knowledge" && <GeneralQuiz child={child} />}
+          {category === "Dogs" && <APIQuiz />}
+          {category === "General Knowledge" && <GeneralQuiz />}
         </div>
       </div>
     </div>
