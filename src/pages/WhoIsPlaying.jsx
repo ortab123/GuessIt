@@ -100,28 +100,38 @@ export default function WhoIsPlaying() {
   }, [state.session, navigate])
 
   return (
-    <div className="who-container">
-      <h2>Who’s playing?</h2>
-
-      <div className="who-card">
-        <button className="player" onClick={() => navigate("/parent")}>
-          <div className="parent">👤</div>
-          <span>Parent</span>
-        </button>
-
-        {err && <div>{err}</div>}
-
-        {children.map((c) => (
-          <button key={c.id} className="player" onClick={() => navigate(`/child/${c.id}`)}>
-            <div className="child">👦</div>
-            <span>{c.name}</span>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h2 className="text-2xl font-bold mb-6 text-center">Who is playing?</h2>
+        <div className="flex flex-wrap gap-6 justify-center">
+          <button
+            className="player flex flex-col items-center px-6 py-4 bg-white rounded-lg shadow-md hover:bg-blue-100 transition cursor-pointer"
+            onClick={() => navigate("/parent")}
+          >
+            <div className="parent text-4xl mb-2">👤</div>
+            <span className="font-semibold">Parent</span>
           </button>
-        ))}
 
-        <button className="player" onClick={() => navigate("/add")}>
-          <div className="plus">＋</div>
-          <span>Plus</span>
-        </button>
+          {children.map((c) => (
+            <button
+              key={c.id}
+              className="player flex flex-col items-center px-6 py-4 bg-white rounded-lg shadow-md hover:bg-blue-100 transition cursor-pointer"
+              onClick={() => navigate(`/child/${c.id}`)}
+            >
+              <div className="child text-4xl mb-2">👦</div>
+              <span className="font-semibold">{c.name}</span>
+            </button>
+          ))}
+
+          <button
+            className="player flex flex-col items-center px-6 py-4 bg-white rounded-lg shadow-md hover:bg-green-100 transition cursor-pointer"
+            onClick={() => navigate("/add")}
+          >
+            <div className="plus text-4xl mb-2">＋</div>
+            <span className="font-semibold">Add Child</span>
+          </button>
+        </div>
+        {err && <div className="text-red-500 text-center mt-4">{err}</div>}
       </div>
     </div>
   )
