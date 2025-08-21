@@ -5,6 +5,7 @@ import LoginForm from "./pages/LoginForm";
 import WhoIsPlaying from "./pages/WhoIsPlaying";
 import Home from "./pages/Home"; 
 import AddChild from "./pages/AddChild";  
+import ParentDashboard from "./components/ParentDashboard/ParentDashboard";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/who" element={<WhoIsPlaying />} />
+         <Route path="/parent" element={<ParentDashboard />} />
         <Route
           path="/add"
           element={isAuthed ? <AddChild /> : <Navigate to="/" replace />}
