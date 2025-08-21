@@ -82,11 +82,16 @@ export default function WhoIsPlaying() {
       if (!user) return
       const { data, error } = await supabase
         .from("Children")
-        .select("id,name,age")
+        .select("id,name,age,correct_answers,wrong_answers,total_play_time")
         .eq("parent_id", user.id)
         .order("created_at", { ascending: true })
-      if (error) setErr(error.message)
-      else setChildren(data || [])
+      console.log("Fetched children:", data)
+      if (error) {
+        console.error("Error fetching children:", error)
+        setErr(error.message)
+      } else {
+        setChildren(data || [])
+      }
     }
     fetchChildren()
   }, [session, user, loading, navigate])

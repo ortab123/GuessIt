@@ -57,18 +57,6 @@ export default function AddChild() {
         <button type="submit">Add</button>
       </form>
       {message && <div style={{ color: "red", marginTop: "10px" }}>{message}</div>}
-      {children.length > 0 && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>Your Children:</h3>
-          <ul>
-            {children.map((child) => (
-              <li key={child.id}>
-                {child.name} (Age: {child.age})
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   )
 }
