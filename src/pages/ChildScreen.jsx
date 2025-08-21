@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { getChildById } from "../services/children.js"
+import GeneralQuiz from "../components/GeneralQuiz.jsx"
+import APIQuiz from "../components/APIQuiz.jsx"
 
 const CATEGORIES = ["Dogs", "General Knowledge"]
 
 export default function ChildScreen() {
   const { id } = useParams()
-  const navigate = useNavigate()
   const [child, setChild] = useState(null)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(true)
@@ -27,17 +28,18 @@ export default function ChildScreen() {
   if (!child) return <div>Child not found</div>
 
   return (
-    <div>
-      <div className="child-header">
-        <h2>Hello {child.name}</h2>
-      </div>
-
+    <div className="flex flex-col items-center mt-4 w-агдд">
       <div>
         {CATEGORIES.map((c) => (
           <button key={c} onClick={() => setCategory(c)} disabled={category === c} style={{ marginRight: 8 }}>
             {c}
           </button>
         ))}
+
+        <div className="mt-6">
+          {category === "Dogs" && <APIQuiz child={child} />}
+          {category === "General Knowledge" && <GeneralQuiz child={child} />}
+        </div>
       </div>
     </div>
   )
