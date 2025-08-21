@@ -1,34 +1,23 @@
+import AddChild from "../../pages/AddChild.jsx"
 import ChildCard from "./ChildCard"
 
 export default function ChildrenTab({ childList, addChild, deleteChild }) {
-  const handleAdd = async () => {
-    const name = prompt("Enter child name:")
-    const age = prompt("Enter child age:")
-    if (name) await addChild({ name, age })
-  }
-
   const handleDelete = async (child) => {
     await deleteChild(child.id)
   }
 
   return (
     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-white/30">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col justify-between items-center mb-4">
         <h2 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
           Manage Children
         </h2>
-        <button
-          onClick={handleAdd}
-          className="px-4 py-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 shadow-md hover:shadow-lg transition"
-        >
-          + Add Child
-        </button>
       </div>
 
       {childList && childList.length === 0 ? (
         <p className="text-gray-500">No children added yet.</p>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-3 mt-6">
           {childList &&
             childList.map((child) => (
               <ChildCard

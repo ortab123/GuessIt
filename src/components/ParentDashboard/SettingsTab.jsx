@@ -12,23 +12,32 @@ export default function SettingsTab() {
   const handleUpdate = async () => {
     setMsg("")
 
-    const updates = {}
-    if (email) updates.email = email
-    if (password) updates.password = password
+    try {
+      const updates = {}
+      if (email && email !== user?.email) updates.email = email
+      if (password && password.length >= 6) updates.password = password
 
-    if (Object.keys(updates).length > 0) {
-      const { error: authError } = await supabase.auth.updateUser(updates)
-      if (authError) return setMsg(authError.message)
+      if (Object.keys(updates).length > 0) {
+        const { error: authError } = await supabase.auth.updateUser(updates)
+        if (authError) throw new Error(authError.message)
+      }
+
+      if (userName && userName.trim().length > 0) {
+        const userId = user?.id
+        const { error: dbError } = await supabase
+          .from("Users")
+          .update({ userName })
+          .eq("id", userId)
+
+        if (dbError) throw new Error(dbError.message)
+      }
+
+      setMsg("✅ Account updated successfully!")
+      setPassword("")
+      setUserName("")
+    } catch (err) {
+      setMsg(`❌ ${err.message}`)
     }
-
-    if (userName) {
-      const userId = user?.id
-      const { error: dbError } = await supabase.from("Users").update({ userName }).eq("id", userId)
-
-      if (dbError) return setMsg(dbError.message)
-    }
-
-    setMsg("Account updated successfully!")
   }
 
   return (

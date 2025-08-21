@@ -85,7 +85,6 @@ export default function WhoIsPlaying() {
         .select("id,name,age,correct_answers,wrong_answers,total_play_time")
         .eq("parent_id", user.id)
         .order("created_at", { ascending: true })
-      console.log("Fetched children:", data)
       if (error) {
         console.error("Error fetching children:", error)
         setErr(error.message)

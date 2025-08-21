@@ -8,7 +8,7 @@ export async function fetchChildrenForParent(parentId) {
 }
 import { supabase } from "./supabaseClient"
 
-export async function addChild(name, age) {
+export async function addChild({ name, age }) {
   //The parent is the logged in user
   const {
     data: { user },
@@ -22,7 +22,7 @@ export async function addChild(name, age) {
     .insert([
       {
         parent_id: user.id,
-        name: name?.trim(),
+        name: name,
         age: Number(age),
       },
     ])
@@ -30,7 +30,8 @@ export async function addChild(name, age) {
     .single()
 
   if (error) return { error: error.message }
-  return { data }
+
+  alert("Child added successfully!")
 }
 
 export async function getChildById(id) {
