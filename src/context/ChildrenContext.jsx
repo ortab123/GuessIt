@@ -48,13 +48,30 @@ export function ChildrenProvider({ children }) {
     return error;
   };
 
+  const updateChild = async (id, updatedData) => {
+    const { error } = await supabase
+      .from("Children")
+      .update(updatedData)
+      .eq("id", id);
+    if (!error) await fetchChildren();
+    return error;
+  };
+
   useEffect(() => {
     fetchChildren();
   }, [state.session?.user]);
 
   return (
     <ChildrenContext.Provider
-      value={{ childList, loading, err, fetchChildren, addChild, deleteChild }}
+      value={{
+        childList,
+        loading,
+        err,
+        fetchChildren,
+        addChild,
+        deleteChild,
+        updateChild,
+      }}
     >
       {children}
     </ChildrenContext.Provider>

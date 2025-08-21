@@ -1,53 +1,121 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { addChild } from "../services/children"; 
+// import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { addChild } from "../services/children";
 
-export default function AddChild() {
+// export default function AddChild() {
+//   const [name, setName] = useState("");
+//   const [age, setAge] = useState("");
+//   const [message, setMessage] = useState("");
+//   const navigate = useNavigate();
+
+//   async function handleSubmit(e) {
+//     e.preventDefault();
+
+//     const { data, error } = await addChild(name, age);
+
+//     if (error) {
+//       setMessage(`❌ ${error}`);
+//     } else {
+//         alert(`Child "${name}" added successfully!`);
+//         navigate("/who");
+//         setName("");
+//         setAge("");
+//     }
+//   }
+
+//   return (
+//     <div>
+//       <h2>Add Child</h2>
+//       <form onSubmit={handleSubmit}>
+//         <div>
+//           <label>Name: </label>
+//           <input
+//             value={name}
+//             onChange={(e) => setName(e.target.value)}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label>Age: </label>
+//           <input
+//             type="number"
+//             value={age}
+//             onChange={(e) => setAge(e.target.value)}
+//             required
+//           />
+//         </div>
+
+//         <button type="submit">Add</button>
+//       </form>
+//     </div>
+//   );
+// }
+
+import { useState } from "react";
+import { useChildren } from "../context/ChildrenContext";
+
+export default function AddChild({ onAdded }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
+  const { addChild } = useChildren();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const { data, error } = await addChild(name, age);
+    const error = await addChild({ name, age });
 
     if (error) {
-      setMessage(`❌ ${error}`);
+      setMessage(`❌ ${error.message || error}`);
     } else {
-        alert(`Child "${name}" added successfully!`); 
-        navigate("/who");
-        setName("");
-        setAge("");
+      setMessage(`Child "${name}" added successfully!`);
+      setName("");
+      setAge("");
+      if (onAdded) onAdded();
     }
   }
-
   return (
-    <div>
-      <h2>Add Child</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-md border border-white/30">
+      <h2 className="text-lg font-bold mb-3 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+        Add Child
+      </h2>
+
+      <form onSubmit={handleSubmit} className="space-y-3">
         <div>
-          <label>Name: </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Name
+          </label>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
           />
         </div>
 
         <div>
-          <label>Age: </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Age
+          </label>
           <input
             type="number"
             value={age}
             onChange={(e) => setAge(e.target.value)}
             required
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
           />
         </div>
 
-        <button type="submit">Add</button>
+        <button
+          type="submit"
+          className="w-full px-4 py-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium hover:from-green-600 hover:to-emerald-600 shadow-md hover:shadow-lg transition"
+        >
+          Add
+        </button>
       </form>
+
+      {message && <p className="text-sm mt-3 text-gray-700">{message}</p>}
     </div>
   );
 }
