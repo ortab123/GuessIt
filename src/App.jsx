@@ -4,7 +4,8 @@ import SignupForm from "./pages/SignUpForm";
 import LoginForm from "./pages/LoginForm";
 import WhoIsPlaying from "./pages/WhoIsPlaying";
 import Home from "./pages/Home"; 
-import AddChild from "./pages/AddChild";  
+import AddChild from "./pages/AddChild"; 
+import ChildScreen from "./components/ChildScreen"; 
 import ParentDashboard from "./components/ParentDashboard/ParentDashboard";
 import "./App.css";
 
@@ -20,10 +21,8 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/who" element={<WhoIsPlaying />} />
          <Route path="/parent" element={<ParentDashboard />} />
-        <Route
-          path="/add"
-          element={isAuthed ? <AddChild /> : <Navigate to="/" replace />}
-        />
+        <Route path="/add" element={isAuthed ? <AddChild /> : <Navigate to="/" replace />}/>
+        <Route path="/child/:id" element={isAuthed ? <ChildScreen /> : <Navigate to="/" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
