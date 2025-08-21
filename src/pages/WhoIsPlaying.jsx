@@ -59,13 +59,45 @@
 //   );
 // }
 
-import { useNavigate } from "react-router-dom";
-import { useChildren } from "../context/ChildrenContext";
-
+import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useAuth } from "../context/AuthContext"
+import { supabase } from "../services/supabaseClient"
 
 export default function WhoIsPlaying() {
-  const navigate = useNavigate();
-  const { childList, err } = useChildren();
+  const navigate = useNavigate()
+  const { state } = useAuth()
+  const [children, setChildren] = useState([])
+  const [err, setErr] = useState("")
+
+  useEffect(() => {
+    if (!state.session) {
+      navigate("/login")
+      return
+    }
+    setErr("")
+    // Fetch the list of children
+    const fetchChildren = async () => {
+      const {
+        data: { user },
+        error: userErr,
+      } = await supabase.auth.getUser()
+      if (userErr) {
+        setErr(userErr.message)
+        return
+      }
+      if (!user) {
+        setErr("Not logged in")
+        return
+      }
+
+      const { data, error } = await supabase.from("Children").select("id,name,age").eq("parent_id", user.id).order("created_at", { ascending: true })
+
+      if (error) setErr(error.message)
+      else setChildren(data || [])
+    }
+    fetchChildren()
+  }, [state.session, navigate])
 
   return (
     <div className="who-container">
@@ -79,12 +111,8 @@ export default function WhoIsPlaying() {
 
         {err && <div>{err}</div>}
 
-        {childList.map((c) => (
-          <button
-            key={c.id}
-            className="player"
-            onClick={() => navigate(`/child/${c.id}`)}
-          >
+        {children.map((c) => (
+          <button key={c.id} className="player" onClick={() => navigate(`/child/${c.id}`)}>
             <div className="child">👦</div>
             <span>{c.name}</span>
           </button>
@@ -96,5 +124,5 @@ export default function WhoIsPlaying() {
         </button>
       </div>
     </div>
-  );
+  )
 }
