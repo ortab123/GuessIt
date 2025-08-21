@@ -91,7 +91,11 @@ export default function WhoIsPlaying() {
         return
       }
 
-      const { data, error } = await supabase.from("Children").select("id,name,age").eq("parent_id", user.id).order("created_at", { ascending: true })
+      const { data, error } = await supabase
+        .from("Children")
+        .select("id,name,age")
+        .eq("parent_id", user.id)
+        .order("created_at", { ascending: true })
 
       if (error) setErr(error.message)
       else setChildren(data || [])
