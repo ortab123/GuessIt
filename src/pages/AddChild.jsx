@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addChild } from "../services/child"; 
+import { addChild } from "../services/children"; 
 
 export default function AddChild() {
   const [name, setName] = useState("");
