@@ -31,20 +31,21 @@ export default function ChildScreen() {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex gap-4 mb-6">
-          {CATEGORIES.map((c) => (
-            <button
-              key={c}
-              onClick={() => setCategory(c)}
-              disabled={category === c}
-              className={`px-4 py-2 rounded-lg shadow-md font-semibold transition-all duration-200 ${
-                category === c
-                  ? "bg-blue-500 text-white"
-                  : "bg-white text-blue-600 hover:bg-blue-100"
-              }`}
-            >
-              {c}
-            </button>
-          ))}
+          {CATEGORIES.map((c) => {
+            const isActive = category === c;
+            return (
+              <button
+                key={c}
+                onClick={() => setCategory(c)}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all border-2
+                  ${isActive
+                    ? "border-purple-600 text-purple-700 bg-white ring-2 ring-purple-200"
+                    : "border-transparent text-blue-600 bg-white hover:border-purple-300"}`}
+              >
+                {c}
+              </button>
+            );
+          })}
         </div>
         <div className="mt-6">
           {category === "Dogs" && <APIQuiz />}
