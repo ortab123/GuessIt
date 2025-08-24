@@ -36,7 +36,7 @@ Each answer updates per‑child stats (correct/wrong, minutes played) and mainta
 
 2) Install dependencies
 Make sure you have Node.js (v18+) installed and then run
-         npm install
+             npm install
 
 
 4) Configure environment variables
@@ -51,5 +51,5 @@ Create a file called .env in the root of the project and set:
 
 
 5) Start development server
-        npm run dev
+           npm run dev
 
