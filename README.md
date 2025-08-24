@@ -15,24 +15,28 @@ Each answer updates per‑child stats (correct/wrong, minutes played) and mainta
 
 * Child Dashboard- Quiz:
 
-1. A question and four pictures to choose the correct answer
-
-2. Records stats per child: correct, wrong, total minutes played
+    1. A question and four pictures to choose the correct answer
+    
+    2. Records stats per child: correct, wrong, total minutes played
 
 * Parent Dashboard: 
 
-1. list of his chidren and optioin to delete user
+    1. list of his chidren and optioin to delete user
+    
+    2. add a general knowledge quiz
+    
+    3. Statistics, summary and charts of the children (correct vs wrong, accuracy, minutes played, difficult breeds)
 
-2. add a general knowledge quiz
 
-3. Statistics, summary and charts of the children (correct vs wrong, accuracy, minutes played, difficult breeds)
 
 
 ▶️ Run Locally
 1) Clone the project
 
+
 2) Install dependencies
 Make sure you have Node.js (v18+) installed and then run npm install
+
 
 3) Configure environment variables
 Create a file called .env in the root of the project and set:
@@ -43,6 +47,7 @@ Create a file called .env in the root of the project and set:
   
   Dog API
   VITE_DOG_API_KEY=<your-dog-api-key>
+
 
 4) Start development server
 npm run dev
