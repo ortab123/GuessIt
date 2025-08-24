@@ -1,6 +1,8 @@
 # GuessIt — Dog, Cat and general knowledge Quiz for Kids
 
-A React + Vite app where Parents create accounts and add children. Kids play a dog‑breed quiz sourced live from TheDogAPI or cat‑breed quiz sourced live from TheCatAPI or a general knowledge quiz that the parent creates based on topics and images of their choice and saves them to a database.
+Quiz app build using React + Vite.
+Parents create accounts and add children. 
+Kids play a dog‑breed quiz sourced live from TheDogAPI or cat‑breed quiz sourced live from TheCatAPI or a general knowledge quiz that the parent creates based on topics and images of their choice and saves them to a database.
 Each answer updates per‑child stats (correct/wrong, minutes played) and maintains a list of ‘difficult breeds’ the child got wrong, which the parent sees in a dashboard with charts.
 
 
