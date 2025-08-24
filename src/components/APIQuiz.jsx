@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getBreeds, getImageForBreed } from "../services/dogApi.js"
+import { getBreeds, getImageForBreed } from "../services/catDogAPI.js"
 import { supabase } from "../services/supabaseClient.js"
 import QuestionCard from "./QuestionCard.jsx"
 
 const QUIZ_LENGTH = 10
 
-const APIQuiz = () => {
+const APIQuiz = ({ mode }) => {
   const { id: childId } = useParams()
 
   const [breeds, setBreeds] = useState([])
@@ -24,7 +24,8 @@ const APIQuiz = () => {
     ;(async () => {
       try {
         setLoading(true)
-        const all = await getBreeds(100, 0)
+        const all = await getBreeds(mode, 100, 0)
+
         setBreeds(all)
         setStartTime(Date.now())
       } catch (e) {
@@ -50,8 +51,8 @@ const APIQuiz = () => {
     const wrongArr = Array.from(wrongs)
 
     const imgs = await Promise.all([
-      getImageForBreed(correct.id),
-      ...wrongArr.map((w) => getImageForBreed(w.id)),
+      getImageForBreed(correct.id, mode),
+      ...wrongArr.map((w) => getImageForBreed(w.id, mode)),
     ])
 
     const correctUrl = imgs[0]?.url

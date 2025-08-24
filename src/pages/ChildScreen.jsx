@@ -4,7 +4,7 @@ import { getChildById } from "../services/children.js"
 import GeneralQuiz from "../components/GeneralQuiz.jsx"
 import APIQuiz from "../components/APIQuiz.jsx"
 
-const CATEGORIES = ["Dogs", "General Knowledge"]
+const CATEGORIES = ["Dogs", "Cats", "General Knowledge"]
 
 export default function ChildScreen() {
   const { id } = useParams()
@@ -32,23 +32,26 @@ export default function ChildScreen() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex gap-4 mb-6">
           {CATEGORIES.map((c) => {
-            const isActive = category === c;
+            const isActive = category === c
             return (
               <button
                 key={c}
                 onClick={() => setCategory(c)}
                 className={`px-4 py-2 rounded-lg font-semibold transition-all border-2
-                  ${isActive
-                    ? "border-purple-600 text-purple-700 bg-white ring-2 ring-purple-200"
-                    : "border-transparent text-blue-600 bg-white hover:border-purple-300"}`}
+                  ${
+                    isActive
+                      ? "border-purple-600 text-purple-700 bg-white ring-2 ring-purple-200"
+                      : "border-transparent text-blue-600 bg-white hover:border-purple-300"
+                  }`}
               >
                 {c}
               </button>
-            );
+            )
           })}
         </div>
         <div className="mt-6">
-          {category === "Dogs" && <APIQuiz />}
+          {category === "Dogs" && <APIQuiz mode="dogs" />}
+          {category === "Cats" && <APIQuiz mode="cats" />}
           {category === "General Knowledge" && <GeneralQuiz />}
         </div>
       </div>
