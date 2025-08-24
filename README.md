@@ -41,12 +41,12 @@ Make sure you have Node.js (v18+) installed and then run npm install
 3) Configure environment variables
 Create a file called .env in the root of the project and set:
 
-  Supabase
-  VITE_SUPABASE_URL=https://<your-project>.supabase.co
-  VITE_SUPABASE_ANON_KEY=<your-anon-key>
-  
-  Dog API
-  VITE_DOG_API_KEY=<your-dog-api-key>
+          Supabase
+          VITE_SUPABASE_URL=https://<your-project>.supabase.co
+          VITE_SUPABASE_ANON_KEY=<your-anon-key>
+          
+          Dog API
+          VITE_DOG_API_KEY=<your-dog-api-key>
 
 
 4) Start development server
