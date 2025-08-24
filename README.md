@@ -5,6 +5,7 @@ Each answer updates per‑child stats (correct/wrong, minutes played) and mainta
 
 
 
+
 ✨ Features
 
 * Auth : parent signup/login/logout
@@ -26,6 +27,8 @@ Each answer updates per‑child stats (correct/wrong, minutes played) and mainta
     2. add a general knowledge quiz
     
     3. Statistics, summary and charts of the children (correct vs wrong, accuracy, minutes played, difficult breeds)
+
+
 
 
 
