@@ -27,7 +27,7 @@ export default function Summary({ cards }) {
                 <StatCard title="Correct Answers" value={child.correct} />
                 <StatCard title="Wrong Answers" value={child.wrong} />
                 <StatCard title="Success Rate" value={` ${accuracy}% `} />
-                {/* <StatCard title="Difficult Breed" value={child.difficult_breed || "-"} /> */}
+                <StatCard title="Difficult Breed" value={child.difficult_breed || "-"} />
               </div>
             )}
           </div>

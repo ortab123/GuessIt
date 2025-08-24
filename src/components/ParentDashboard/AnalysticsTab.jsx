@@ -13,6 +13,7 @@ export default function AnalyticsTab({ children }) {
       const total = correct + wrong
       const accuracy = total > 0 ? Math.round((correct / total) * 100) : 0
       const timeMin = c.total_play_time ?? 0
+      const difficult_breed = c.difficult_breed ?? "none"
       return {
         id: c.id,
         name: c.name || "Child",
@@ -20,6 +21,7 @@ export default function AnalyticsTab({ children }) {
         wrong,
         accuracy,
         timeMin,
+        difficult_breed,
       }
     })
   }, [children])

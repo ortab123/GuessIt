@@ -25,7 +25,7 @@ export default function ParentDashboard({ onBack }) {
     }
     const { data, error } = await supabase
       .from("Children")
-      .select("id,name,age,correct_answers,wrong_answers,total_play_time")
+      .select("id,name,age,correct_answers,wrong_answers,total_play_time,difficult_breed")
       .eq("parent_id", user.id)
       .order("created_at", { ascending: true })
     if (error) setErr(error.message)
