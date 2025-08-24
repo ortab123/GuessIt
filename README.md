@@ -1,12 +1,56 @@
-# React + Vite
+# GuessIt — Dog/general knowledge Quiz for Kids
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite app where Parents create accounts and add children. Kids play a dog‑breed quiz sourced live from TheDogAPI or a general knowledge quiz that the parent creates based on topics and images of their choice and saves them to a database.
+Each answer updates per‑child stats (correct/wrong, minutes played) and maintains a list of ‘difficult breeds’ the child got wrong, which the parent sees in a dashboard with charts.
 
-Currently, two official plugins are available:
+✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Auth : parent signup/login/logout
 
-## Expanding the ESLint configuration
+Who’s Playing?: Parent + Child screen (children appear after you add them)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Add Child: name & age → stored under the logged‑in parent
+
+Dogs Quiz:
+
+A question and four pictures to choose the correct answer
+
+Builds rounds from TheDogAPI (one correct image + three wrongs)
+
+Green/red feedback
+
+Records stats per child: correct, wrong, total minutes played
+
+Keeps an array of difficult breeds (breeds the child missed)
+
+General Quiz : quiz sourced from a local table
+
+A question and four pictures to choose the correct answer
+
+Parent Dashboard: 
+
+list of his chidren and optioin to delete user
+
+add a general knowledge quiz
+
+Statistics, summary and charts of the children (correct vs wrong, accuracy, minutes played, difficult breeds)
+
+
+▶️ Run Locally
+1) Clone the project
+
+2) Install dependencies
+Make sure you have Node.js (v18+) installed and then run npm install
+
+3) Configure environment variables
+Create a file called .env in the root of the project and set:
+Supabase
+VITE_SUPABASE_URL=https://<your-project>.supabase.co
+VITE_SUPABASE_ANON_KEY=<your-anon-key>
+
+Dog API
+VITE_DOG_API_KEY=<your-dog-api-key>
+
+4) Start development server
+npm run dev
+
