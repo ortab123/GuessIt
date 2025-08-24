@@ -35,10 +35,11 @@ Each answer updates per‑child stats (correct/wrong, minutes played) and mainta
 
 
 2) Install dependencies
-Make sure you have Node.js (v18+) installed and then run npm install
+Make sure you have Node.js (v18+) installed and then run
+         npm install
 
 
-3) Configure environment variables
+4) Configure environment variables
 Create a file called .env in the root of the project and set:
 
           Supabase
@@ -49,6 +50,6 @@ Create a file called .env in the root of the project and set:
           VITE_DOG_API_KEY=<your-dog-api-key>
 
 
-4) Start development server
-npm run dev
+5) Start development server
+        npm run dev
 
